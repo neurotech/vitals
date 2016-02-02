@@ -1,6 +1,6 @@
 {
   "name": "rosebank-vitals",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Server health monitoring",
   "main": "app.js",
   "author": "Tim Douglas",
@@ -12,8 +12,8 @@
     "type": "git",
     "url": "https://github.com/neurotech/vitals.git"
   },
-  "bin" : {
-    "vitals" : "app.js"
+  "bin": {
+    "vitals": "app.js"
   },
   "engines": {
     "node": ">=4"
