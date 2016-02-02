@@ -1,5 +1,5 @@
+#!/usr/bin/env node
 'use strict';
-
 var got = require('got');
 var Table = require('cli-table');
 var logSymbols = require('log-symbols');
