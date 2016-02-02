@@ -1,5 +1,5 @@
 {
-  "name": "vitals",
+  "name": "rosebank-vitals",
   "version": "1.0.0",
   "description": "Server health monitoring",
   "main": "app.js",
@@ -12,7 +12,9 @@
     "type": "git",
     "url": "https://github.com/neurotech/vitals.git"
   },
-  "bin": "app.js",
+  "bin" : {
+    "vitals" : "app.js"
+  },
   "engines": {
     "node": ">=4"
   },
