@@ -1,40 +1,68 @@
 #!/usr/bin/env node
 'use strict';
 var got = require('got');
-var Table = require('cli-table');
-var logSymbols = require('log-symbols');
+var chalk = require('chalk');
+var Table = require('tty-table');
 
-var table = new Table({
-  style: {
-    head: ['yellow'],
-    border: ['grey']
+var promises = [];
+var rows = [];
+var header = [
+  {
+    value: 'System',
+    headerColor: 'yellow',
+    color: 'white',
+    align: 'center',
+    width: 15
+  },
+  {
+    value: 'Status',
+    headerColor: 'yellow',
+    color: 'white',
+    align: 'center',
+    width: 15,
+    formatter: function (value) {
+      if (value === 'up') {
+        return chalk.green(value);
+      } else {
+        return chalk.red(value);
+      }
+    }
   }
+];
+
+var systems = [
+  {
+    name: 'Edumate',
+    url: process.env.EDUMATE_HOST + '/' + process.env.EDUMATE_PATH.toLowerCase()
+  },
+  {
+    name: 'Exchange',
+    url: process.env.CANVAS_API_DOMAIN
+  }
+];
+
+systems.forEach(function (value, index) {
+  promises.push(
+    got(`https://${value.url}`)
+      .then(data => {
+        rows.push([value.name, 'up']);
+      })
+      .catch(error => {
+        if (error) {
+          rows.push([value.name, 'down']);
+        }
+      })
+  );
 });
 
-var edumate = process.env.EDUMATE_HOST + '/' + process.env.EDUMATE_PATH.toLowerCase();
-var exchange = process.env.CANVAS_API_DOMAIN;
-
-var up = logSymbols.success;
-var down = logSymbols.error;
-
-Promise.all([
-  // Edumate
-  got.head(`https://${edumate}`)
-    .then(data => {
-      table.push({ 'Edumate': [up] });
-    })
-    .catch(error => {
-      table.push({ 'Edumate': [down] });
-    }),
-
-  // Exchange
-  got(`https://${exchange}`)
-    .then(data => {
-      table.push({ 'Exchange': [up] });
-    })
-    .catch(error => {
-      table.push({ 'Exchange': [down] });
-    })
-]).then(function () {
-  console.log(table.toString());
-});
+Promise.all(promises)
+  .then(values => {
+    var results = Table(header, rows, {
+      borderStyle: 1,
+      paddingBottom: 0,
+      headerAlign: 'center',
+      align: 'center',
+      color: 'white'
+    });
+    console.log(results.render());
+  });

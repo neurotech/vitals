@@ -19,8 +19,8 @@
     "node": ">=4"
   },
   "dependencies": {
-    "cli-table": "^0.3.1",
+    "chalk": "1.1.1",
     "got": "^6.1.1",
-    "log-symbols": "^1.0.2"
+    "tty-table": "1.0.7"
   }
 }
