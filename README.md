@@ -13,3 +13,8 @@ Expects the following environment variables to be set:
 `EDUMATE_PATH`
 
 `CANVAS_API_DOMAIN`
+
+## To do
+
+ 1. Make use of [https://github.com/yeoman/configstore](https://github.com/yeoman/configstore)
+ 2. Create a simple bootstrapper to push new systems to `configstore`
